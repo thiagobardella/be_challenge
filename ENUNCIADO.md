@@ -1,9 +1,4 @@
-# Solução #
-
-
-## Autor: Thiago Bardella
-
-
+# Rota de Viagem #
 
 Um turista deseja viajar pelo mundo pagando o menor preço possível independentemente do número de conexões necessárias.
 Vamos construir um programa que facilite ao nosso turista, escolher a melhor rota para sua viagem.
