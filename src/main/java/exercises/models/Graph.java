@@ -103,7 +103,7 @@ public class Graph {
                 edges.forEach(edge -> {
                     String verticeString =  vertice.getName() + ',' +
                                             edge.destination.getName() + "," +
-                                            edge.weight;
+                                            edge.weight + ",";
                     if (stringBuilder.indexOf(verticeString) == -1) {
                         stringBuilder.append(verticeString);
                     }

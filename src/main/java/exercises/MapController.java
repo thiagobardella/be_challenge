@@ -22,7 +22,7 @@ public class MapController {
     @PostMapping("/routes/add")
     @ResponseBody
     //TODO (handle exception)
-    public String add(@RequestBody String route) throws Exception {
+    public String add(@RequestParam String route) throws Exception {
         String sourceName = route.split(",")[0];
         String destinationName = route.split(",")[1];
         int weight = Integer.valueOf(route.split(",")[2]);

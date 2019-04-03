@@ -4,6 +4,9 @@ import exercises.Application;
 import exercises.models.Graph;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class IOUtils {
 
@@ -33,7 +36,9 @@ public class IOUtils {
     }
 
     public static void writeContentToCsv(Graph graph) throws Exception {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/routes.csv"));
+        Files.write(Paths.get("/input-routes.csv"), graph.toString().getBytes(), StandardOpenOption.WRITE);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/input-routes.csv"));
         writer.write(graph.toString());
         writer.close();
     }
