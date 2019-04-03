@@ -1,4 +1,4 @@
-package exercises.models;
+package exercises;
 
 import exercises.utils.IOUtils;
 import org.junit.Test;
@@ -9,14 +9,12 @@ import static org.junit.Assert.*;
 
 public class GraphTest {
 
-    private String testFilePath = "/csv-unit-tests-file.txt";
+    private String testFilePath = "input-routes.csv";
     private Graph graph = new Graph(IOUtils.getTextFromFile(testFilePath));
 
     @Test
     public void shouldGetPathForSameCity() {
-        Vertex fromCity = new Vertex("GRU");
-        Vertex toCity = new Vertex("GRU");
-        List<Path> result = graph.getAllPaths(fromCity, toCity);
+        List<Path> result = graph.getAllPaths("GRU", "GRU");
         assertEquals(1, result.size());
         assertEquals(0, result.get(0).weight);
         assertEquals("GRU > $0", result.get(0).toString());
@@ -24,9 +22,7 @@ public class GraphTest {
 
     @Test
     public void shouldGetPathFromGRUtoCDG() {
-        Vertex fromCity = new Vertex("GRU");
-        Vertex toCity = new Vertex("CDG");
-        List<Path> result = graph.getAllPaths(fromCity, toCity);
+        List<Path> result = graph.getAllPaths("GRU", "CDG");
         assertEquals(4, result.size());
 
         assertEquals(40, result.get(0).weight);
@@ -44,9 +40,7 @@ public class GraphTest {
 
     @Test
     public void shouldGetPathFromGRUtoORL() {
-        Vertex fromCity = new Vertex("GRU");
-        Vertex toCity = new Vertex("ORL");
-        List<Path> result = graph.getAllPaths(fromCity, toCity);
+        List<Path> result = graph.getAllPaths("GRU", "ORL");
         assertEquals(3, result.size());
 
         assertEquals(35, result.get(0).weight);

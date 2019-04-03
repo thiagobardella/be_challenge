@@ -1,46 +1,51 @@
 package exercises;
 
-import exercises.models.Graph;
 import exercises.utils.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/map")
 public class MapController {
-
-    private final static String routesPath = "/input-routes.csv";
 
     @GetMapping("/routes/all")
     @ResponseBody
     public ResponseEntity<String> paths() {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(IOUtils.getTextFromFile(routesPath));
+                .body(IOUtils.getTextFromFile(Application.routesCSV));
     }
 
     @PostMapping("/routes/add")
     @ResponseBody
-    //TODO (handle exception)
-    public String add(@RequestParam String route) throws Exception {
+    public String add(
+            @RequestParam String route,
+            @RequestParam(required = false) String csvOutputPath) throws Exception {
         String sourceName = route.split(",")[0];
         String destinationName = route.split(",")[1];
         int weight = Integer.valueOf(route.split(",")[2]);
 
-        Graph map = new Graph(IOUtils.getTextFromFile(routesPath));
-        if (map.contains(sourceName, destinationName)) return "Rota já cadastrada!";
+        Graph map = new Graph(IOUtils.getTextFromFile(Application.routesCSV));
+        if (map.contains(sourceName, destinationName)) return "Route already registered!";
 
         map.addNode(sourceName, destinationName, weight);
+        if (csvOutputPath == null)
         IOUtils.writeContentToCsv(map);
-        return "Rota cadastrada!";
+        return "Route registered!";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/routes/get")
     @ResponseBody
-    public ResponseEntity<String> all() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(IOUtils.getTextFromFile(routesPath));
+    public static String get(
+            @RequestParam String from,
+            @RequestParam String to
+    ) {
+        Graph map = new Graph(IOUtils.getTextFromFile(Application.routesCSV));
+
+        List<Path> allPaths = map.getAllPaths(from, to);
+        if (allPaths.isEmpty()) System.out.println("There's no route from '" + from + "' to '" + to + "'");
+        return allPaths.get(0).toString();
     }
-
-
 }
