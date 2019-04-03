@@ -1,11 +1,17 @@
 # Solução #
 
 
-## Autor: Thiago Bardella
+## Autor: Thiago Bardella ##
+ 
+ API /add
+ 
+ Caso a rota já exista, portanto origem e destinos já existentes, o custo dessa rota também será ignorado. 
 
+    REST API
+    
+    dfd
 
-
-Um turista deseja viajar pelo mundo pagando o menor preço possível independentemente do número de conexões necessárias.
+   Um turista deseja viajar pelo mundo pagando o menor preço possível independentemente do número de conexões necessárias.
 Vamos construir um programa que facilite ao nosso turista, escolher a melhor rota para sua viagem.
 
 Para isso precisamos inserir as rotas através de um arquivo de entrada.

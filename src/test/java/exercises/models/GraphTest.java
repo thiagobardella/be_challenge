@@ -1,6 +1,6 @@
-package models;
+package exercises.models;
 
-import Utils.IOUtils;
+import exercises.utils.IOUtils;
 import org.junit.Test;
 
 import java.util.List;

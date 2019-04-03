@@ -1,4 +1,4 @@
-package models;
+package exercises.models;
 
 import java.util.*;
 
@@ -17,20 +17,33 @@ public class Graph {
             String sourceName = components[0];
             String destinationName = components[1];
             int weight = Integer.valueOf(components[2]);
-            Vertex source = addVertex(sourceName);
-            Vertex destination = new Vertex(destinationName);
-            addEdge(source, destination, weight);
+
+            addNode(sourceName, destinationName, weight);
         }
     }
 
-    public Vertex addVertex(String name) {
+    public void addNode(String sourceName, String destinationName, int weight) {
+        Vertex source = addVertex(sourceName);
+        Vertex destination = new Vertex(destinationName);
+        addEdge(source, destination, weight);
+    }
+
+    private Vertex addVertex(String name) {
         Vertex newVertex = new Vertex(name);
         List<Edge> edges = new ArrayList<>();
         adjVertices.putIfAbsent(newVertex, edges);
         return newVertex;
     }
 
-    public void addEdge(Vertex source, Vertex destination, int weight) {
+    public boolean contains(String sourceName, String destinationName) {
+        Vertex vertexSource = new Vertex(sourceName);
+        Vertex vertexDestination = new Vertex(destinationName);
+        if (!adjVertices.containsKey(vertexSource)) return false;
+        return adjVertices.get(vertexSource).stream()
+                .anyMatch(edge -> edge.destination.equals(vertexDestination));
+    }
+
+    private void addEdge(Vertex source, Vertex destination, int weight) {
         // TODO (check if destination already has a weight)
         Edge newEdge = new Edge(destination, weight);
         List<Edge> edgesFromSource = adjVertices.get(source);
@@ -50,8 +63,6 @@ public class Graph {
         }
 
         searchGraph(fromCity, toCity, isVisited, result, new Path(fromCity));
-//        isVisited.put(fromCity, true);
-//        result.add(path);
         result.sort(comparingInt(path -> path.weight));
         return result;
     }
@@ -84,6 +95,20 @@ public class Graph {
         }
 
         isVisited.remove(fromCity);
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        adjVertices.forEach((vertice, edges) ->
+                edges.forEach(edge -> {
+                    String verticeString =  vertice.getName() + ',' +
+                                            edge.destination.getName() + "," +
+                                            edge.weight;
+                    if (stringBuilder.indexOf(verticeString) == -1) {
+                        stringBuilder.append(verticeString);
+                    }
+                }));
+        return stringBuilder.toString();
     }
 
 }

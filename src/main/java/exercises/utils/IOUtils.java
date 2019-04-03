@@ -1,11 +1,9 @@
-package Utils;
+package exercises.utils;
 
-import Boot.Application;
+import exercises.Application;
+import exercises.models.Graph;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class IOUtils {
 
@@ -14,7 +12,9 @@ public class IOUtils {
             Class clazz = Application.class;
             // TODO (get Input Stream from file path that should come as parameter from main)
             InputStream inputStream = clazz.getResourceAsStream(path);
-            return readFromInputStream(inputStream);
+            String result = readFromInputStream(inputStream);
+            inputStream.close();
+            return result;
         } catch (IOException ex) {
             return null;
         }
@@ -30,6 +30,12 @@ public class IOUtils {
             }
         }
         return resultStringBuilder.toString();
+    }
+
+    public static void writeContentToCsv(Graph graph) throws Exception {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/routes.csv"));
+        writer.write(graph.toString());
+        writer.close();
     }
 
 }
